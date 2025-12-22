@@ -1,6 +1,6 @@
 # GPU version: Use CUDA base image
 # CPU version: Change to python:3.11-slim
-ARG BASE_IMAGE=nvidia/cuda:12.1-runtime-ubuntu22.04
+ARG BASE_IMAGE=nvidia/cuda:12.1.0-runtime-ubuntu22.04
 FROM ${BASE_IMAGE}
 
 WORKDIR /app
