@@ -1,14 +1,10 @@
-# GPU version: Use CUDA base image
-# CPU version: Change to python:3.11-slim
-ARG BASE_IMAGE=nvidia/cuda:12.1.0-runtime-ubuntu22.04
-FROM ${BASE_IMAGE}
+# Use PyTorch official image with CUDA support
+FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
 
 WORKDIR /app
 
-# Install Python and system dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    python3.11 \
-    python3-pip \
     libgl1-mesa-glx \
     libglib2.0-0 \
     libsm6 \
@@ -17,14 +13,9 @@ RUN apt-get update && apt-get install -y \
     libgomp1 \
     poppler-utils \
     tesseract-ocr \
-    && rm -rf /var/lib/apt/lists/* \
-    && ln -s /usr/bin/python3.11 /usr/bin/python
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-# PyTorch with CUDA support
-RUN pip install --no-cache-dir \
-    torch torchvision --index-url https://download.pytorch.org/whl/cu121
-
 RUN pip install --no-cache-dir \
     marker-pdf \
     fastapi \
